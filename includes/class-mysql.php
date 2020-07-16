@@ -51,7 +51,13 @@ function yourls_db_connect() {
      * The driver options are passed to the PDO constructor, eg array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION)
      * The attribute options are then set in a foreach($attr as $k=>$v){$db->setAttribute($k, $v)} loop
      */
-    $driver_options = yourls_apply_filter( 'db_connect_driver_option', [] ); // driver options as key-value pairs
+    $options = [];
+    
+    /**
+     * Persistent connection to DB
+     */
+    $options['PDO::ATTR_PERSISTENT'] = YOURLS_DB_PERSISTENT;
+    $driver_options = yourls_apply_filter( 'db_connect_driver_option', $options ); // driver options as key-value pairs
     $attributes = yourls_apply_filter( 'db_connect_attributes', [] ); // attributes as key-value pairs
 
     $ydb = new \YOURLS\Database\YDB( $dsn, $user, $pass, $driver_options, $attributes );

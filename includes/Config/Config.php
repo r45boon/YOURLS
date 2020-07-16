@@ -211,6 +211,10 @@ class Config {
         } else {
             error_reporting( E_ERROR | E_PARSE );
         }
+        
+        // if set to true, verbose debug infos. Will break things. Don't enable.
+        if (!defined( 'YOURLS_DB_PERSISTENT' ))
+            define( 'YOURLS_DB_PERSISTENT', false );
     }
 
 }

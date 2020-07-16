@@ -352,3 +352,21 @@ function yourls_clean_htaccess_for_14() {
 	return $result;
 }
 
+/**
+ * Alter table structure (add url index)
+ *
+ */
+function yourls_alter_url_table_add_url_index() {
+	global $ydb;
+	$table = YOURLS_DB_TABLE_URL;
+
+    $alters = array();
+	$alters[] = "ALTER TABLE `$table` CHANGE `url` `url` VARCHAR( 255 ) BINARY NOT NULL";
+    $alters[] = "ALTER TABLE `$table` ADD INDEX ( `url` )";
+
+	foreach ( $alters as $query ) {
+		$ydb->query( $query );
+	}
+
+	echo "<p>New table index created</p>";
+}
